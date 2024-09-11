@@ -13,6 +13,11 @@ type GlobalConfig struct {
 	Verbose        bool            `mapstructure:"verbose"`
 	APIConfig      *APIConfig      `mapstructure:"api"`
 	PostgresConfig *PostgresConfig `mapstructure:"pg"`
+	RabbitMQConfig *RabbitMQConfig `mapstructure:"rabbitmq"`
+}
+
+func (gc *GlobalConfig) AMQPUrl() string {
+	return fmt.Sprintf("amqp://%s:%s@%s:%d", gc.RabbitMQConfig.Username, gc.RabbitMQConfig.Password, gc.RabbitMQConfig.Hostname, gc.RabbitMQConfig.Port)
 }
 
 type APIConfig struct {
@@ -38,21 +43,13 @@ type PGAuth struct {
 	Password string `mapstructure:"password"`
 }
 
-//type PostgresConfig struct {
-//	Hostname string `mapstructure:"hostname"`
-//	Username string `mapstructure:"username"`
-//	Password string `mapstructure:"password"`
-//	Schema   string `mapstructure:"schema"`
-//	SSL      string `mapstructure:"sslmode"`
-//	Port     int    `mapstructure:"port"`
-//}
-//
-//func (p *PostgresConfig) DSN(manage bool) string {
-//	if manage {
-//		return fmt.Sprintf("host=%s user=%s password=%s port=%d sslmode=%s", p.Hostname, p.Username, p.Password, p.Port, p.SSL)
-//	}
-//	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", p.Hostname, p.Username, p.Password, p.Schema, p.Port, p.SSL)
-//}
+type RabbitMQConfig struct {
+	Username       string `mapstructure:"username"`
+	Password       string `mapstructure:"password"`
+	Hostname       string `mapstructure:"hostname"`
+	Port           int    `mapstructure:"port"`
+	PublishTimeout int    `mapstructure:"publish_timeout"`
+}
 
 func DefaultConfig() *GlobalConfig {
 	return &GlobalConfig{}

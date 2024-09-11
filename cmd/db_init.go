@@ -16,7 +16,7 @@ import (
 )
 
 // initCmd represents the init command
-var initCmd = &cobra.Command{
+var dbInitCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize emri db (destructive)",
 	Long:  `Initialize emri db (destructive).`,
@@ -128,7 +128,7 @@ var initCmd = &cobra.Command{
 }
 
 func init() {
-	dbCmd.AddCommand(initCmd)
+	dbCmd.AddCommand(dbInitCmd)
 
 	// Here you will define your flags and configuration settings.
 

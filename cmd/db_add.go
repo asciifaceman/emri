@@ -4,36 +4,21 @@ Copyright © 2024 Charles <AsciiFaceman> Corbett
 package cmd
 
 import (
-	"github.com/asciifaceman/emri/pkg/dal"
-	"github.com/asciifaceman/emri/pkg/dal/models"
 	"github.com/spf13/cobra"
-	"go.uber.org/zap"
 )
 
 // initCmd represents the init command
-var dbMigrateCmd = &cobra.Command{
-	Use:   "migrate",
-	Short: "migrate emri db (destructive)",
-	Long:  `migrate emri db (destructive).`,
+var dbAddCmd = &cobra.Command{
+	Use:   "add",
+	Short: "add a domain to emri",
+	Long:  `add a domain to emri using the same mechanisms as typical usage`,
 	Run: func(cmd *cobra.Command, args []string) {
-		zap.S().Info("Connecting to db under app creds to migrate")
-
-		dl, err := dal.New()
-		if err != nil {
-			zap.S().Fatalw("failed to get dal", "error", err)
-		}
-
-		if err := dl.Migrate(models.Migrate...); err != nil {
-			zap.S().Fatalw("failed to migrate", "error", err)
-		}
-
-		zap.S().Info("complete!")
 
 	},
 }
 
 func init() {
-	dbCmd.AddCommand(dbMigrateCmd)
+	dbCmd.AddCommand(dbAddCmd)
 
 	// Here you will define your flags and configuration settings.
 

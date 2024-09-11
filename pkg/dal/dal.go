@@ -3,6 +3,7 @@ package dal
 import (
 	"fmt"
 
+	"github.com/asciifaceman/emri/pkg/dal/models"
 	"github.com/asciifaceman/emri/pkg/global"
 	"go.uber.org/zap"
 	"gorm.io/driver/postgres"
@@ -61,4 +62,14 @@ func (p *PG) Raw(format string, args ...interface{}) *gorm.DB {
 
 func (p *PG) Exec(format string, args ...interface{}) *gorm.DB {
 	return p.db.Exec(fmt.Sprintf(format, args...))
+}
+
+func (p *PG) CreateInstanceObject(domain *models.InstanceObject) error {
+	p.l.Debugw("inserting domain", "domain", domain.Domain)
+
+	if err := p.db.Create(domain); err.Error != nil {
+		return err.Error
+	}
+
+	return nil
 }

@@ -14,3 +14,9 @@ pg:
   manage:
     username: postgres
     password: placeholder
+rabbitmq:
+  username: guest
+  password: guest
+  hostname: 10.0.0.210
+  port: 5672
+  publish_timeout: 5
